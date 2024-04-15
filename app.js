@@ -27,4 +27,4 @@ app.use(routes);
 app.use(express.static(path.join(__dirname, 'public')));
 
 // bootstraping the app
-app.listen(3001, () => console.log('server on port 3000'));
+app.listen(3000, () => console.log('server on port 3000'));
