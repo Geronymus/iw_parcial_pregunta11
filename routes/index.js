@@ -6,11 +6,26 @@ const agendaController = require('../controllers/index'); // Importa el controla
 router.get('/', agendaController.index);
 
 
-// Ruta para crear una nueva lista en la agenda
 router.post('/crearLista', agendaController.crearLista);
+router.post('/editarLista', agendaController.editarLista); // Nueva ruta para editar
+router.delete('/eliminarLista/:nombreLista', agendaController.eliminarLista); // Nueva ruta para eliminar
+
+
+
+
+
+
+
+
+
 
 // Ruta para crear un archivo dentro de una lista existente en la agenda
 router.post('/crearArchivo/:nombreLista', agendaController.crearArchivo);
+router.post('/editarArchivo/:nombreLista', agendaController.editarArchivo);
+router.delete('/eliminarArchivo/:nombreLista', agendaController.eliminarArchivo);
+
+
+
 
 
 // Ruta para mostrar el contenido de una carpeta única
