@@ -17,26 +17,27 @@
                     <label for="nombreCarpeta" class="form-label">Tarea</label>
                     <input type="text" class="form-control" name="nombreCarpeta" id="nombreCarpeta"
                         placeholder="Ingresa la Tarea">
+                    <div id="nombreError" style="color: red; display: none;">Por favor, ingresa la tarea.</div>
                 </div>
                 <div class="col-6">
                     <label for="fechaTarea" class="form-label">Fecha</label>
-                    <input type="date" class="form-control" name="fechaTarea" id="fechaTarea"
-                        placeholder="Ingresa la fecha">
+                    <input type="date" class="form-control" name="fechaTarea" id="fechaTarea" placeholder="Ingresa la fecha" min="<%= new Date().toISOString().split('T')[0] %>" onchange="updateHoraMin()">
+                    <div id="fechaError" style="color: red; display: none;">Por favor, ingresa la fecha.</div>
                 </div>
                 <div class="col-6">
                     <label for="horaTarea" class="form-label">Hora</label>
-                    <input type="time" class="form-control" name="horaTarea" id="horaTarea"
-                        placeholder="Ingresa la Hora">
+                    <input type="time" class="form-control" name="horaTarea" id="horaTarea" placeholder="Ingresa la Hora">
+                    <div id="horaError" style="color: red; display: none;">Por favor, ingresa la hora.</div>
                 </div>
-
                 <div class="col-12">
                     <label for="descripcionTarea" class="form-label">Descripción</label>
                     <textarea id="descripcionTarea" class="form-control" name="descripcionTarea"
                         placeholder="Descripción"></textarea>
+                    <div id="descripcionError" style="color: red; display: none;">Por favor, ingresa la descripción.</div>
                 </div>
-
+                
                 <div class="col-6">
-                    <button type="submit" class="btn btn-success">
+                    <button type="submit" class="btn btn-success" onclick="validarFormulario()">
                         Registrar
                     </button>
                 </div>
@@ -136,5 +137,51 @@
 
     </script>
 
+<script>
+    function updateHoraMin() {
+        var fechaInput = document.getElementById('fechaTarea').value;
+        var horaInput = document.getElementById('horaTarea');
+
+        // Obtener la fecha actual
+        var fechaActual = new Date().toISOString().split('T')[0];
+
+        // Si la fecha seleccionada es igual a la fecha actual, establecer la hora mínima como la hora actual
+        if (fechaInput === fechaActual) {
+            var horaActual = new Date().getHours();
+            var minutosActuales = new Date().getMinutes();
+
+            // Agregar un cero inicial si los minutos son menores a 10
+            minutosActuales = minutosActuales < 10 ? '0' + minutosActuales : minutosActuales;
+
+            horaInput.setAttribute('min', horaActual + ':' + minutosActuales);
+        } else {
+            // Si la fecha seleccionada es diferente a la fecha actual, permitir cualquier hora
+            horaInput.removeAttribute('min');
+        }
+    }
+</script>
+
+<script>
+    function validarFormulario() {
+        var nombreTarea = document.getElementById('nombreCarpeta').value;
+        var fechaTarea = document.getElementById('fechaTarea').value;
+        var horaTarea = document.getElementById('horaTarea').value;
+        var descripcionTarea = document.getElementById('descripcionTarea').value;
+
+        var nombreError = document.getElementById('nombreError');
+        var fechaError = document.getElementById('fechaError');
+        var horaError = document.getElementById('horaError');
+        var descripcionError = document.getElementById('descripcionError');
+
+        nombreError.style.display = nombreTarea.trim() === '' ? 'block' : 'none';
+        fechaError.style.display = fechaTarea.trim() === '' ? 'block' : 'none';
+        horaError.style.display = horaTarea.trim() === '' ? 'block' : 'none';
+        descripcionError.style.display = descripcionTarea.trim() === '' ? 'block' : 'none';
+
+        if (nombreTarea.trim() === '' || fechaTarea.trim() === '' || horaTarea.trim() === '' || descripcionTarea.trim() === '') {
+            return false; // No enviar el formulario si hay campos vacíos
+        }
+    }
+</script>
 
     <%- include('partials/foot') %>
