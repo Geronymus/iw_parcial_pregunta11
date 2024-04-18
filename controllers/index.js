@@ -34,7 +34,7 @@ exports.crearLista = (req, res) => {
         const archivoNombre = `${horaTarea}.txt`; // Usamos el nombre de la carpeta como nombre del archivo
         const archivoPath = path.join(carpetaPath, archivoNombre);
 
-        const contenidoArchivo = `# ${nombreCarpeta}\n\n\nDescripción: ${descripcionTarea}`;
+        const contenidoArchivo = `# Nombre: ${nombreCarpeta}\n ## Fecha: ${fechaTarea}\n ## Hora: ${horaTarea}\n> Descripción: ${descripcionTarea}`
         fs.writeFileSync(archivoPath, contenidoArchivo);
 
         // Redirige después de crear la tarea
