@@ -198,14 +198,26 @@ exports.editarLista = (req, res) => {
             fs.mkdirSync(carpetaPath, { recursive: true });
         }
 
+        fs.emptyDirSync(carpetaPath);
+
         // Crear o sobrescribir el archivo de tarea dentro de la carpeta
         const archivoNombre = `${tarea.hora}.txt`; // Usamos el nombre de la carpeta como nombre del archivo
         const archivoPath = path.join(carpetaPath, archivoNombre);
 
         const contenidoArchivo = `# Nombre: ${tarea.nombre}\n## Fecha: ${tarea.fecha}\n## Hora: ${tarea.hora}\n### Descripción: ${tarea.descripcion}`;
 
+        console.log("QQF", carpetaNueva)
+        console.log("XS", eliminar )
 
-        fs.rmdirSync(eliminar, { recursive: true }); 
+        if (carpetaNueva == nombreListaActual){
+            
+            console.log("ASASAS")
+        }
+        else {
+            fs.rmdirSync(eliminar, { recursive: true }); 
+            console.log("ASSU")
+        }
+        
 
         fs.writeFileSync(archivoPath, contenidoArchivo);
 
