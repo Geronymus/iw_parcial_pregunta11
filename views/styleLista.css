@@ -1,0 +1,89 @@
+/* Estilos para el cuerpo de la página */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+h2 {
+    color: rgb(252, 251, 247); /* Color dorado */
+    text-shadow: 2px 2px 5px rgb(0, 0, 0); /* Sombra blanca */
+    font-family: "Garamond", serif; /* Fuente de letra tipo "Garamond" */
+    padding: 10px; /* Añade un poco de espacio alrededor del texto */
+    display: flex; /* Activa el modelo de caja flexible */
+    align-items: center; /* Centra verticalmente el contenido */
+    justify-content: center; /* Centra horizontalmente el contenido */
+}
+
+a{
+    color: #ffffff;
+}
+/* Estilos para el encabezado */
+h1 {
+    color: gold; /* Color dorado */
+    text-shadow: 2px 2px 5px rgb(0, 0, 0); /* Sombra blanca */
+    font-family: "Garamond", serif; /* Fuente de letra tipo "Garamond" */
+    padding: 10px; /* Añade un poco de espacio alrededor del texto */
+    display: flex; /* Activa el modelo de caja flexible */
+    align-items: center; /* Centra verticalmente el contenido */
+    justify-content: center; /* Centra horizontalmente el contenido */
+}
+
+p {
+    color: rgb(22, 21, 12); /* Color dorado */
+    text-shadow: 2px 2px 5px rgb(0, 0, 0); /* Sombra blanca */
+    font-family: "Garamond", serif; /* Fuente de letra tipo "Garamond" */
+    padding: 10px; /* Añade un poco de espacio alrededor del texto */
+    display: flex; /* Activa el modelo de caja flexible */
+    text-align: justify; /* Centrar el texto */
+    align-items: end; /* Centra verticalmente el contenido */
+    justify-content: center; /* Centra horizontalmente el contenido */
+}
+
+.imagenAgendaFondo {
+    position: fixed; /* Cambia la posición a fixed */
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-image: url('/images/mesa_pergamino.png');
+    background-size: cover; /* Ajusta el tamaño de la imagen para cubrir todo el contenedor */
+    background-repeat: repeat-y; /* Repetir la imagen verticalmente */
+}
+
+
+.imagenAgendaTitulo {
+    position: relative;
+    z-index: -1;
+    width: 500px;
+    height: 100px;
+    /* Ajusta las siguientes propiedades para centrar la imagen en el medio */
+    top: 15%; /* Coloca la parte superior de la imagen en el 50% del contenedor */
+    left: 50%; /* Coloca la parte izquierda de la imagen en el 50% del contenedor */
+    transform: translate(-50%, -50%); /* Centra la imagen utilizando transformaciones */
+    opacity: 0.7; /* Establece la opacidad al 50% */
+    border-radius: 10px; /* Establece los bordes redondeados */
+}
+
+container {
+    max-width: 600px; /* Establece el ancho máximo del contenedor */
+    margin: auto; /* Centra el contenedor en la página */
+    padding: 20px; /* Añade un espacio alrededor del contenido */
+}
+
+.panel {
+    background-color: #dd8d32d7; /* Color de fondo del panel */
+    border: 1px solid #dd8d32d7; /* Borde del panel */
+    border-radius: 5px; /* Bordes redondeados */
+    padding: 20px; /* Espacio interior del panel */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra */
+}
+
+.panel form {
+    margin-bottom: 0; /* Elimina el margen inferior del formulario */
+}
+
+.panel .form-label {
+    font-weight: bold; /* Establece la negrita para las etiquetas del formulario */
+}
