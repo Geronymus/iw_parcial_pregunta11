@@ -1,119 +1,139 @@
 <%- include('partials/head') %>
 
-    <h1>
-        <%= title %>
-    </h1>
+<link rel="stylesheet" type="text/css" href="/style.css">
 
-    <ul>
-        <% contenido.forEach(item=> { %>
-            <li>
-                <a href="/mostrarArchivo/<%= item %>">
-                    <%= item %>
-                </a>
-                <button class="eliminarBtn" data-nombre="<%= item %>">Eliminar</button>
+<div class="imagenAgendaFondo"></div>
 
+<img src="/images/agenda.jpg" alt="Descripción de la imagen" class="imagenAgendaTitulo">
+
+<h2>Crea tu nueva Tarea</h2>
+
+<form id="crearListaForm" method="POST">
+    <input id="nombreCarpeta" type="text" name="nombreCarpeta" placeholder="Nombre de la Carpeta">
+    <input id="fechaTarea" type="date" name="fechaTarea">
+    <input id="horaTarea" type="time" name="horaTarea">
+    <textarea id="descripcionTarea" name="descripcionTarea" placeholder="Descripción"></textarea>
+    <button type="submit">Agregar Tarea</button>
+</form>
+
+<h2>Lista de Tareas</h2>
+
+<ul>
+    <% contenido.forEach(item=> { %>
+    <li>
+        <div class="panelContainer">
+            <!-- Panel 1 -->
+            <div class="panel">
+                <!-- Formulario 1 -->
                 <form class="editarForm" method="POST">
-                    <input type="hidden" id="nombreListaAnterior" value="<%= item %>">
-                    <input type="text" id="nuevoNombreLista" placeholder="Nuevo nombre">
-                    <button type="submit">Editar</button>
+                    <div class="formularioContenedor">
+                        <a href="/mostrarArchivo/<%= item %>">
+                            <%= item %>
+                        </a>
+                        <input type="hidden" id="nombreListaAnterior" value="<%= item %>">
+                        <input type="text" id="nuevoNombreLista" placeholder="Nuevo nombre">
+                        <!-- Contenedor de botones -->
+                        <div class="botonesContenedor">
+                            <button type="submit" class="botonEditar">Editar</button>
+                            <button class="eliminarBtn" data-nombre="<%= item %>">Eliminar</button>
+                        </div>
+                    </div>
                 </form>
 
+            </div>
+        </div>
 
-            </li>
-            <% }); %>
-    </ul>
+    </li>
+    <% }); %>
+</ul>
 
-    <h3>Crea tu nueva Tarea</h3>
+<script>
+    document.getElementById('nombreCarpeta').focus();
 
-    <form id="crearListaForm" method="POST">
-        <input id="newItem" type="text" name="nombreLista">
-        <button type="submit">Agregar Tarea</button>
-    </form>
+    document.getElementById('crearListaForm').addEventListener('submit', function (event) {
+        event.preventDefault(); // Evitar el comportamiento por defecto del formulario
 
-    <script>
-        document.getElementById('newItem').focus();
+        // Enviar solicitud POST para crear una nueva lista
+        fetch('/crearLista', {
+            method: 'POST',
+            body: JSON.stringify({
+                nombreCarpeta: document.getElementById('nombreCarpeta').value,
+                fechaTarea: document.getElementById('fechaTarea').value,
+                horaTarea: document.getElementById('horaTarea').value,
+                descripcionTarea: document.getElementById('descripcionTarea').value
+            }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Verificar si hay una propiedad de redirección en la respuesta
+            if (data.redirect) {
+                window.location.href = data.redirect; // Redirigir a la página indicada
+            } else {
+                console.error('Error al crear la lista:', data.error);
+            }
+        })
+        .catch(error => console.error('Error al crear la lista:', error));
+    });
+</script>
 
-        document.getElementById('crearListaForm').addEventListener('submit', function (event) {
-            event.preventDefault(); // Evitar el comportamiento por defecto del formulario
 
-            // Enviar solicitud POST para crear una nueva lista
-            fetch('/crearLista', {
+<script>
+    // Escucha el clic en los botones de eliminar y envía la solicitud DELETE
+    document.querySelectorAll('.eliminarBtn').forEach(btn => {
+        btn.addEventListener('click', function () {
+            const nombreLista = this.dataset.nombre;
+            fetch(`/eliminarLista/${nombreLista}`, {
+                method: 'DELETE'
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.redirect) {
+                    window.location.href = data.redirect;
+                } else {
+                    console.error('Error al eliminar la lista:', data.error);
+                }
+            })
+            .catch(error => console.error('Error al eliminar la lista:', error));
+        });
+    });
+</script>
+
+
+<script>
+
+    document.querySelectorAll('.editarForm').forEach(form => {
+        form.addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            // Encuentra los valores dentro del formulario actual
+            const nombreListaAnterior = this.querySelector('#nombreListaAnterior').value;
+            const nuevoNombreLista = this.querySelector('#nuevoNombreLista').value;
+
+            fetch('/editarLista', {
                 method: 'POST',
-                body: JSON.stringify({ nombreLista: document.getElementById('newItem').value }),
+                body: JSON.stringify({
+                    nombreListaAnterior: nombreListaAnterior,
+                    nuevoNombreLista: nuevoNombreLista
+                }),
                 headers: {
                     'Content-Type': 'application/json'
                 }
             })
-                .then(response => response.json())
-                .then(data => {
-                    // Verificar si hay una propiedad de redirección en la respuesta
-                    if (data.redirect) {
-                        window.location.href = data.redirect; // Redirigir a la página indicada
-                    } else {
-                        console.error('Error al crear la lista:', data.error);
-                    }
-                })
-                .catch(error => console.error('Error al crear la lista:', error));
+            .then(response => response.json())
+            .then(data => {
+                if (data.redirect) {
+                    window.location.href = data.redirect;
+                } else {
+                    console.error('Error al editar la lista:', data.error);
+                }
+            })
+            .catch(error => console.error('Error al editar la lista:', error));
         });
-    </script>
+    });
 
+</script>
 
-    <script>
-        // Escucha el clic en los botones de eliminar y envía la solicitud DELETE
-        document.querySelectorAll('.eliminarBtn').forEach(btn => {
-            btn.addEventListener('click', function () {
-                const nombreLista = this.dataset.nombre;
-                fetch(`/eliminarLista/${nombreLista}`, {
-                    method: 'DELETE'
-                })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.redirect) {
-                            window.location.href = data.redirect;
-                        } else {
-                            console.error('Error al eliminar la lista:', data.error);
-                        }
-                    })
-                    .catch(error => console.error('Error al eliminar la lista:', error));
-            });
-        });
-    </script>
-
-
-    <script>
-
-        document.querySelectorAll('.editarForm').forEach(form => {
-            form.addEventListener('submit', function (event) {
-                event.preventDefault();
-
-                // Encuentra los valores dentro del formulario actual
-                const nombreListaAnterior = this.querySelector('#nombreListaAnterior').value;
-                const nuevoNombreLista = this.querySelector('#nuevoNombreLista').value;
-
-                fetch('/editarLista', {
-                    method: 'POST',
-                    body: JSON.stringify({
-                        nombreListaAnterior: nombreListaAnterior,
-                        nuevoNombreLista: nuevoNombreLista
-                    }),
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.redirect) {
-                            window.location.href = data.redirect;
-                        } else {
-                            console.error('Error al editar la lista:', data.error);
-                        }
-                    })
-                    .catch(error => console.error('Error al editar la lista:', error));
-            });
-        });
-
-    </script>
-
-
-
-    <%- include('partials/foot') %>
+<%- include('partials/foot') %>

@@ -1,39 +1,42 @@
 <%- include('partials/head') %>
 
-    <h1>Carpeta <%= nombreLista %>
-    </h1>
+<link rel="stylesheet" type="text/css" href="/styleContenido.css">
+
+<div class="imagenAgendaFondo"></div>
+
+<h2>Crea tu Actividad</h2>
+
+<form id="crearArchivoForm" method="POST">
+    <!-- Agregamos un campo oculto para el nombre de la lista -->
+    <input type="hidden" id="newLista" name="nombreLista" value="<%= nombreLista  %>" />
+    <input type="text" id="newArchivo" name="nombreArchivo" placeholder="Nombre del archivo" />
+    <!-- Otros campos del formulario si es necesario -->
+    <button type="submit">Crear Archivo</button>
+</form>
+
+    <h1>Carpeta <%= nombreLista %></h>
     <!-- Mostramos el nombre de la lista aquí -->
+    <div class="panelConScroll">
+        <ul>
+            <% archivos.forEach(archivo=> { %>
 
-    <ul>
-        <% archivos.forEach(archivo=> { %>
+                <li id="archivo">
+                        <form class="editarFormArchivo" method="POST">
+                            <%= archivo %>
+                            <br>
+                            <input type="hidden" name="nombreLista" value="<%= nombreLista %>" />
+                            <input type="hidden" class="nombreArchivoAnterior" value="<%= archivo %>" />
+                            <input type="text" class="nuevoNombreArchivo" placeholder="Nuevo nombre" />
+                            <div class="botonesContenedor">
+                                <button type="submit">Editar</button>
+                                <button class="eliminarBtn" data-ruta="<%= nombreLista %>" data-nombre="<%= archivo %>">Eliminar</button>
+                            </div>
+                        </form>
 
-            <li id="archivo">
-                <%= archivo %>
-
-                    <button class="eliminarBtn" data-ruta="<%= nombreLista %>" data-nombre="<%= archivo %>">
-                        Eliminar
-                    </button>
-
-                    <form class="editarFormArchivo" method="POST">
-                        <input type="hidden" name="nombreLista" value="<%= nombreLista %>" />
-                        <input type="hidden" class="nombreArchivoAnterior" value="<%= archivo %>" />
-                        <input type="text" class="nuevoNombreArchivo" placeholder="Nuevo nombre" />
-                        <button type="submit">Editar</button>
-                    </form>
-
-            </li>
-            <% }); %>
-    </ul>
-
-    <h3>Crea tu Actividad</h3>
-
-    <form id="crearArchivoForm" method="POST">
-        <!-- Agregamos un campo oculto para el nombre de la lista -->
-        <input type="hidden" id="newLista" name="nombreLista" value="<%= nombreLista  %>" />
-        <input type="text" id="newArchivo" name="nombreArchivo" placeholder="Nombre del archivo" />
-        <!-- Otros campos del formulario si es necesario -->
-        <button type="submit">Crear Archivo</button>
-    </form>
+                </li>
+                <% }); %>
+        </ul>
+    </div>
 
     <script>
         document

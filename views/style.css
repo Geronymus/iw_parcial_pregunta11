@@ -1,0 +1,235 @@
+/* Estilos para el cuerpo de la página */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+h2 {
+    color: gold; /* Color dorado */
+    text-shadow: 2px 2px 5px white; /* Sombra blanca */
+    font-family: "Garamond", serif; /* Fuente de letra tipo "Garamond" */
+    padding: 10px; /* Añade un poco de espacio alrededor del texto */
+    display: flex; /* Activa el modelo de caja flexible */
+    align-items: center; /* Centra verticalmente el contenido */
+    justify-content: center; /* Centra horizontalmente el contenido */
+}
+
+
+/* Estilos para el encabezado */
+h1 {
+    color: #4CAF50; /* Color verde oscuro */
+    text-align: center; /* Centrar el texto */
+    font-size: 36px; /* Tamaño de la fuente más grande */
+    margin-top: 30px; /* Espacio superior un poco más grande */
+    margin-bottom: 20px; /* Espacio inferior */
+    font-family: 'Arial', sans-serif; /* Fuente predeterminada más legible */
+}
+
+.imagenAgendaFondo {
+    position: fixed; /* Cambia la posición a fixed */
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-image: url('/images/image2.jpg');
+    background-size: cover; /* Ajusta el tamaño de la imagen para cubrir todo el contenedor */
+    background-repeat: repeat-y; /* Repetir la imagen verticalmente */
+}
+
+
+.imagenAgendaTitulo {
+    position: relative;
+    z-index: -1;
+    width: 500px;
+    height: 100px;
+    /* Ajusta las siguientes propiedades para centrar la imagen en el medio */
+    top: 15%; /* Coloca la parte superior de la imagen en el 50% del contenedor */
+    left: 50%; /* Coloca la parte izquierda de la imagen en el 50% del contenedor */
+    transform: translate(-50%, -50%); /* Centra la imagen utilizando transformaciones */
+    opacity: 0.7; /* Establece la opacidad al 50% */
+    border-radius: 10px; /* Establece los bordes redondeados */
+}
+
+
+#crearListaForm {
+    display: flex;
+    flex-direction: column;
+    max-width: 300px; /* ajusta el ancho máximo según tu diseño */
+    margin: auto; /* centrar el formulario horizontalmente */
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+#crearListaForm input[type="text"] {
+    margin-bottom: 10px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+#crearListaForm button[type="submit"] {
+    padding: 8px 12px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+#crearListaForm button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+
+
+/* Estilos para la lista de elementos */
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    margin-bottom: 10px;
+}
+
+/* Estilos para los botones */
+button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+/* Estilos para el formulario */
+form {
+    margin-bottom: 10px;
+}
+
+input[type="text"] {
+    padding: 5px;
+    width: 200px;
+}
+
+/* Estilos para el enfoque en el nuevo elemento del formulario */
+#newItem:focus {
+    border: 2px solid #007bff;
+    outline: none;
+}
+
+/* Estilos para el formulario de creación de tarea */
+#crearListaForm {
+    margin-top: 20px;
+}
+
+#crearListaForm input[type="text"] {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 200px;
+    margin-right: 10px;
+}
+
+#crearListaForm button[type="submit"] {
+    padding: 8px 15px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#crearListaForm button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+/* Estilos para el formulario de edición */
+.editarForm {
+    margin-bottom: 20px;
+    background-color: #d1a045;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+/* Estilos para el contenedor del formulario */
+.formularioContenedor {
+    display: flex;
+    align-items: center; /* Alinea verticalmente los elementos */
+    margin-bottom: 10px;
+}
+
+/* Estilos para el contenedor del formulario */
+.editarForm .formularioContenedor {
+    display: flex;
+    flex-direction: column; /* Cambia la dirección del flexbox a columna */
+    align-items: flex-start; /* Alinea los elementos al inicio */
+    margin-bottom: 10px;
+}
+
+/* Estilos para los botones y campos de entrada dentro del formulario de edición */
+.editarForm input[type="hidden"],
+.editarForm input[type="text"],
+.editarForm button[type="submit"],
+.editarForm .eliminarBtn {
+    padding: 8px 12px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    margin-bottom: 5px; /* Agrega margen inferior entre los elementos */
+}
+
+/* Estilos para los botones y campos de entrada cuando se pasa el mouse sobre ellos dentro del formulario de edición */
+.editarForm button[type="submit"]:hover,
+.editarForm .eliminarBtn:hover {
+    background-color: #0056b3;
+}
+
+
+/* Estilos para el contenedor de paneles */
+.panelContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; /* Centra horizontalmente los paneles */
+}
+
+/* Estilos para cada panel */
+.panel {
+    width: calc(33.33% - 20px); /* Ancho de cada panel (33.33% con espacio entre ellos) */
+    margin-right: 20px; /* Espacio entre los paneles */
+    margin-bottom: 20px; /* Espacio debajo de los paneles */
+    background-color: #d1a045;
+    padding: 20px;
+    border-radius: 5px;
+    overflow-y: auto; /* Añade scroll si es necesario */
+    max-height: 200px; /* Altura máxima del panel */
+}
+
+/* Estilos para los formularios dentro de cada panel */
+.panel form {
+    margin-bottom: 20px; /* Espacio entre formularios */
+}
+
+/* Estilos para los elementos dentro de los formularios de cada panel */
+.panel form .formularioContenedor {
+    display: flex;
+    align-items: center; /* Alinear verticalmente los elementos */
+}
+
+/* Estilos para el enlace dentro de los formularios de cada panel */
+.panel form .formularioContenedor a {
+    margin-right: 10px; /* Espacio entre el enlace y los otros elementos */
+}
+
+/* Estilos para los campos de entrada dentro de los formularios de cada panel */
+.panel form input[type="hidden"],
+.panel form input[type="text"] {
+    padding: 8px;
+    border: 1px solid transparent; /* Borde transparente */
+    border-radius: 3px;
+}

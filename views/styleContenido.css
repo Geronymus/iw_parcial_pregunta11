@@ -1,0 +1,203 @@
+/* Estilos para el cuerpo de la página */
+.imagenAgendaFondo {
+    position: fixed; /* Cambia la posición a fixed */
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-image: url('/images/image1.jpg');
+    background-size: cover; /* Ajusta el tamaño de la imagen para cubrir todo el contenedor */
+    background-repeat: repeat-y; /* Repetir la imagen verticalmente */
+}
+
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    color: #000000; /* Color verde oscuro */
+    text-align: center; /* Centrar el texto */
+    text-shadow: 2px 2px 5px white; /* Sombra blanca */
+    font-family: "Garamond", serif; /* Fuente de letra tipo "Garamond" */
+    font-size: 36px; /* Tamaño de la fuente más grande */
+    margin-top: 30px; /* Espacio superior un poco más grande */
+    margin-bottom: 20px; /* Espacio inferior */
+}
+
+h2 {
+    color: gold; /* Color dorado */
+    text-shadow: 2px 2px 5px white; /* Sombra blanca */
+    font-family: "Garamond", serif; /* Fuente de letra tipo "Garamond" */
+    padding: 10px; /* Añade un poco de espacio alrededor del texto */
+    display: flex; /* Activa el modelo de caja flexible */
+    align-items: center; /* Centra verticalmente el contenido */
+    justify-content: center; /* Centra horizontalmente el contenido */
+}
+
+/* Estilos para la lista de archivos */
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    margin-bottom: 10px;
+}
+
+/* Estilos para los botones */
+button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+/* Estilos para los formularios */
+form {
+    margin-bottom: 10px;
+}
+
+input[type="text"] {
+    padding: 5px;
+    width: 200px;
+}
+
+/* Estilos para los formularios de edición */
+.editarFormArchivo {
+    margin-bottom: 20px;
+    background-color: #d1a045;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+/* Estilos para el contenedor del formulario */
+.formularioContenedor {
+    display: flex;
+    align-items: center; /* Alinea verticalmente los elementos */
+}
+
+/* Estilos para el formulario de edición de archivo */
+.editarFormArchivo {
+    margin-bottom: 20px;
+    background-color: #d1a045;
+    padding: 20px;
+    border-radius: 5px;
+    display: flex; /* Activar modelo de caja flexible */
+    flex-direction: column; /* Apilar elementos verticalmente */
+    align-items: center; /* Centrar horizontalmente */
+}
+
+/* Estilos para el contenedor de botones */
+.botonesContenedor {
+    display: flex; /* Activar modelo de caja flexible */
+    justify-content: center; /* Centrar horizontalmente los botones */
+    margin-top: 10px; /* Espacio superior entre el formulario y los botones */
+}
+
+
+/* Estilos para los botones y campos de entrada dentro del formulario de edición */
+.editarFormArchivo input[type="hidden"],
+.editarFormArchivo input[type="text"],
+.editarFormArchivo button[type="submit"],
+.editarFormArchivo .eliminarBtn {
+    padding: 8px 12px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    margin-bottom: 5px; /* Agrega margen inferior entre los elementos */
+}
+
+/* Estilos para los botones y campos de entrada cuando se pasa el mouse sobre ellos dentro del formulario de edición */
+.editarFormArchivo button[type="submit"]:hover,
+.editarFormArchivo .eliminarBtn:hover {
+    background-color: #0056b3;
+}
+
+
+#crearArchivoForm {
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 300px;
+    background-color: #d1a045;
+}
+
+#crearArchivoForm input[type="text"] {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+#crearArchivoForm button[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#crearArchivoForm button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+
+/* Estilos para el panel con scroll */
+.panelConScroll {
+    max-height: 300px; /* Altura máxima del panel */
+    overflow-y: auto; /* Activar scroll vertical si es necesario */
+    border: 1px solid #ccc; /* Borde gris */
+    border-radius: 5px; /* Bordes redondeados */
+    padding: 10px; /* Espaciado interno */
+    margin: 0 auto; /* Centrar horizontalmente */
+}
+
+/* Estilos para los elementos del panel */
+.panelConScroll li {
+    margin-bottom: 10px; /* Espacio entre elementos */
+}
+
+/* Estilos para el formulario dentro del panel */
+.panelConScroll form {
+    background-color: #d1a045; /* Fondo gris claro */
+    padding: 10px; /* Espaciado interno */
+    border-radius: 5px; /* Bordes redondeados */
+}
+
+/* Estilos para los campos de entrada dentro del formulario */
+.panelConScroll input[type="text"] {
+    width: calc(100% - 20px); /* Ancho completo menos el espaciado */
+    padding: 5px; /* Espaciado interno */
+    margin-bottom: 10px; /* Espacio inferior */
+    border: 1px solid #ccc; /* Borde gris */
+    border-radius: 3px; /* Bordes redondeados */
+}
+
+/* Estilos para los botones dentro del formulario */
+.panelConScroll button {
+    width: 100%; /* Ancho completo */
+    padding: 10px; /* Espaciado interno */
+    background-color: #007bff; /* Color de fondo azul */
+    color: #fff; /* Color de texto blanco */
+    border: none; /* Sin borde */
+    border-radius: 3px; /* Bordes redondeados */
+    cursor: pointer; /* Cursor apuntador */
+    transition: background-color 0.3s; /* Transición suave de color */
+}
+
+/* Estilos para los botones cuando se pasa el mouse sobre ellos */
+.panelConScroll button:hover {
+    background-color: #0056b3; /* Cambio de color al pasar el mouse */
+}
