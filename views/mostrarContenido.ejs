@@ -6,53 +6,77 @@
 
 
     <h2>Edita la Tarea</h2>
-
     <div class="container">
         <div class="panel">
-            <% contenido.forEach(item=> { %>
-
+            <% contenido.forEach(tarea=> { %>
                 <form class="row g-3 mt-3 " id="editarFormArchivo" method="POST">
                     <div class="col-12">
                         <label for="nombreCarpeta" class="form-label">Tarea</label>
-                        <input type="text" class="form-control" name="nombreCarpeta" id="nombreCarpeta">
+                        <input type="text" class="form-control" name="nombreCarpeta" id="nombreCarpeta"
+                            value="<%= tarea.nombre %>">
                     </div>
                     <div class="col-6">
                         <label for="fechaTarea" class="form-label">Fecha</label>
-                        <input type="date" class="form-control" name="fechaTarea" id="fechaTarea">
+                        <input type="date" class="form-control" name="fechaTarea" id="fechaTarea"
+                            value="<%= tarea.fecha %>">
                     </div>
                     <div class="col-6">
                         <label for="horaTarea" class="form-label">Hora</label>
-                        <input type="time" class="form-control" name="horaTarea" id="horaTarea">
+                        <input type="time" class="form-control" name="horaTarea" id="horaTarea"
+                            value="<%= tarea.hora %>">
                     </div>
-
                     <div class="col-12">
                         <label for="descripcionTarea" class="form-label">Descripción</label>
-                        <textarea id="descripcionTarea" class="form-control" name="descripcionTarea"></textarea>
+                        <textarea id="descripcionTarea" class="form-control"
+                            name="descripcionTarea"><%= tarea.descripcion %></textarea>
                     </div>
-
                     <div class="col-6">
-                        <button type="submit" class="btn btn-success">
-                            Editar
-                        </button>
+                        <button type="submit" class="btn btn-success">Editar</button>
                     </div>
                 </form>
-
-
                 <% }) %>
         </div>
     </div>
 
 
-
-
     <script>
-
-
         document.querySelectorAll(".editarFormArchivo").forEach((form) => {
             form.addEventListener("submit", function (event) {
                 event.preventDefault();
 
-            })})
+                // Obtener los datos del formulario
+                const formData = new FormData(form);
+                const tarea = {
+                    nombre: formData.get("nombreCarpeta"),
+                    fecha: formData.get("fechaTarea"),
+                    hora: formData.get("horaTarea"),
+                    descripcion: formData.get("descripcionTarea")
+                };
+
+                // Enviar los datos al backend
+                fetch('/editarLista', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(tarea)
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Error al editar la tarea');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        // Manejar la respuesta del servidor, redireccionar o mostrar un mensaje de éxito, etc.
+                        console.log(data);
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+            });
+        });
     </script>
+
 
     <%- include('partials/foot') %>

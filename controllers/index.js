@@ -6,7 +6,6 @@ exports.index = (req, res, next) => {
     res.redirect('/agenda');
 };
 
-/* Implementacion de Carpertas */
 
 exports.crearLista = (req, res) => {
     const nombreCarpeta = req.body.nombreCarpeta;
@@ -45,45 +44,6 @@ exports.crearLista = (req, res) => {
     }
 };
 
-
-
-
-
-exports.editarLista = (req, res) => {
-    const nombreListaAnterior = req.body.nombreListaAnterior;
-    const nuevoNombreLista = req.body.nuevoNombreLista;
-
-    console.log("GAA" + nombreListaAnterior)
-    console.log("SUII" + nuevoNombreLista)
-
-    if (!nombreListaAnterior || !nuevoNombreLista) {
-        return res.status(400).json({ error: 'Se requiere un nombre de lista anterior y un nuevo nombre' });
-    }
-
-    const agendaPath = path.join(__dirname, '..', 'data');
-    const fechaCreacion = new Date().toISOString().slice(0, 10); // Obtiene la fecha actual en formato 'YYYY-MM-DD'
-    const listaPathAnterior = path.join(agendaPath, nombreListaAnterior);
-
-    const listaPathNuevo = path.join(agendaPath, `${nuevoNombreLista}_${fechaCreacion}`);
-
-    if (!fs.existsSync(listaPathAnterior)) {
-        return res.status(400).json({ error: 'La lista que intentas editar no existe' });
-    }
-
-    try {
-        fs.renameSync(listaPathAnterior, listaPathNuevo);
-
-        res.status(200).json({ mensaje: 'Lista editada exitosamente', redirect: '/agenda' });
-    } catch (error) {
-        console.error('Error al editar la lista:', error);
-        res.status(500).json({ error: 'Ocurrió un error al editar la lista' });
-    }
-};
-
-
-
-
-
 exports.eliminarLista = (req, res) => {
     const nombreLista = req.params.nombreLista; // Usando parámetros de ruta
 
@@ -109,9 +69,6 @@ exports.eliminarLista = (req, res) => {
         res.status(500).json({ error: 'Ocurrió un error al eliminar la lista' });
     }
 };
-
-
-
 
 
 exports.verLista = (req, res) => {
@@ -145,12 +102,6 @@ exports.verLista = (req, res) => {
 };
 
 
-
-
-
-
-
-
 exports.mostrarContenido = (req, res) => {
     const agendaPath = path.join(__dirname, '..', 'data');
 
@@ -166,12 +117,10 @@ exports.mostrarContenido = (req, res) => {
 
 
 exports.mostrarContenidoEditar = (req, res) => {
-
-
-    const agendaPath = path.join(__dirname, '..', 'data');
+    const nombreLista = req.params.nombreLista;
+    const carpetaPath = path.join(__dirname, '..', 'data', nombreLista);
 
     try {
-
         // Lee el contenido de la carpeta
         const archivos = fs.readdirSync(carpetaPath);
 
@@ -179,14 +128,41 @@ exports.mostrarContenidoEditar = (req, res) => {
             return res.status(404).json({ error: 'No se encontraron archivos en la carpeta' });
         }
 
-        // Toma el primer archivo encontrado
-        const nombreArchivo = archivos[0];
-        const archivoPath = path.join(carpetaPath, nombreArchivo);
+        // Creamos un array para almacenar el contenido de todos los archivos
+        let contenidoArray = [];
 
-        // Lee el contenido del archivo
-        const contenido = fs.readFileSync(archivoPath, 'utf8');
-        // Renderiza la vista con el contenido del archivo
-        res.render('mostrarContenido', { title: 'List Agenda', contenido });
+        // Iteramos sobre cada archivo encontrado
+        archivos.forEach(nombreArchivo => {
+            const archivoPath = path.join(carpetaPath, nombreArchivo);
+            // Lee el contenido del archivo
+            const contenido = fs.readFileSync(archivoPath, 'utf8');
+
+            // Convertir la cadena de texto en un objeto con propiedades de tarea
+            function parseTarea(contenido) {
+                const regex = /# Nombre: (.+)\n## Fecha: (.+)\n## Hora: (\d{2}_\d{2})\n### Descripción: (.+)/;
+                const match = contenido.match(regex);
+
+                if (match) {
+                    return {
+                        nombre: match[1],
+                        fecha: match[2],
+                        hora: match[3].replace('_', ':'), // Reemplazar "_" por ":"
+                        descripcion: match[4]
+                    };
+                } else {
+                    return null; // Manejo de error si el formato no coincide
+                }
+            }
+
+            // Procesar el contenido para obtener un array de tareas
+            const tarea = parseTarea(contenido);
+            if (tarea !== null) {
+                contenidoArray.push(tarea);
+            }
+        });
+
+        // Renderiza la vista con el contenido de los archivos como un array
+        res.render('mostrarContenido', { title: 'List Agenda', contenido: contenidoArray });
     } catch (error) {
         console.error('Error al listar el contenido:', error);
         res.status(500).json({ error: 'Ocurrió un error al listar el contenido' });
@@ -194,4 +170,27 @@ exports.mostrarContenidoEditar = (req, res) => {
 };
 
 
+
+exports.editarLista = (req, res) => {
+    const tarea = {
+        nombre: req.body.nombreCarpeta,
+        fecha: req.body.fechaTarea,
+        hora: req.body.horaTarea,
+        descripcion: req.body.descripcionTarea
+    };
+
+    // Aquí debes agregar la lógica para editar la tarea utilizando los datos recibidos
+    // Por ejemplo, podrías buscar la tarea en la base de datos y actualizar sus valores
+
+    try {
+        // Ejemplo de cómo podrías procesar la edición de la tarea
+        // Aquí debes reemplazar este código con tu lógica de edición real
+        console.log('Editar tarea:', tarea);
+
+        res.status(200).json({ mensaje: 'Tarea editada exitosamente' });
+    } catch (error) {
+        console.error('Error al editar la tarea:', error);
+        res.status(500).json({ error: 'Ocurrió un error al editar la tarea' });
+    }
+};
 
