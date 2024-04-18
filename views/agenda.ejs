@@ -48,49 +48,39 @@
 
     <h2>Lista de Tareas</h2>
 
-    <ul>
-        <% contenido.forEach(item=> { %>
-            <li>
-                <div class="panelContainer">
-                    <!-- Panel 1 -->
-                    <div class="panel">
-                        <!-- Formulario 1 -->
-                        <form class="editarForm" method="POST">
-                            <div class="formularioContenedor">
-                                <div class="col-6"></div>
-                                <a href="/mostrarArchivo/<%= item %>">
-                                    <%= item %>
-                                </a>
-                                <input type="hidden" id="nombreListaAnterior" value="<%= item %>">
 
 
 
-
-                            </div>
-                        </form>
-
-                        <a href="/verArchivo/<%= item %>" class="btn btn-success" role="button">
-                            Ver
+    <div class="container" style="background-color: #555350a8;">
+        <div class="row g-3 mt-3">
+            <% contenido.forEach(item => { %>
+                <div class="col-9">
+                    <form method="POST">
+                        <a href="/mostrarArchivo/<%= item %>">
+                            <%= item %>
                         </a>
-
-
-                        <a href="/verArchivo/<%= item %>" class="btn btn-success" role="button">
-                            Ver
-                        </a>
-
-
-                        <button type="submit" class="btn btn-success eliminarBtn" data-nombre="<%= item %>">
-                            Eliminar
-                        </button>
-
-                    </div>
-
+                    </form>
                 </div>
+                <div class="col-1 g-3 mt-3">
+                    <a  href="/verArchivo/<%= item %>" type=" submit" class="btn btn-success btn-secondary">
+                        Ver
+                    </a>
                 </div>
+                <div class="col-1 g-3 mt-3">
+                    <a type="submit" class="btn btn-success btn-secondary">
+                        Editar
+                    </a>
+                </div>
+                <div class="col-1 g-3 mt-3">
+                    <button type="submit" class="btn btn-danger eliminarBtn" data-nombre="<%= item %>">
+                        Eliminar
+                    </button>
+                </div>
+            <% }) %>
+        </div>
+    </div>
+    
 
-            </li>
-            <% }); %>
-    </ul>
 
     <script>
         document.getElementById('nombreCarpeta').focus();
