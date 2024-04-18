@@ -29,7 +29,7 @@ h1 {
     justify-content: center; /* Centra horizontalmente el contenido */
 }
 
-p {
+h3 {
     color: rgb(22, 21, 12); /* Color dorado */
     text-shadow: 2px 2px 5px rgb(0, 0, 0); /* Sombra blanca */
     font-family: "Garamond", serif; /* Fuente de letra tipo "Garamond" */
@@ -38,7 +38,10 @@ p {
     text-align: justify; /* Centrar el texto */
     align-items: end; /* Centra verticalmente el contenido */
     justify-content: center; /* Centra horizontalmente el contenido */
+    word-wrap: break-word; /* Permite que las palabras largas se rompan y salten de línea */
+    max-width: 50ch;
 }
+
 
 .imagenAgendaFondo {
     position: fixed; /* Cambia la posición a fixed */

@@ -36,7 +36,7 @@
                     <div id="descripcionError" style="color: red; display: none;">Por favor, ingresa la descripción.</div>
                 </div>
                 
-                <div class="col-6">
+                <div class="col-6 g-3 mt-3">
                     <button type="submit" class="btn btn-success" onclick="validarFormulario()">
                         Registrar
                     </button>
@@ -54,7 +54,7 @@
 
     <div class="container" style="background-color: #555350a8;">
         <div class="row g-3 mt-3">
-            <% contenido.forEach(item => { %>
+               <% contenido.forEach(item => { %>
                 <div class="col-9">
                     <form method="POST">
                         <a href="/mostrarArchivo/<%= item %>">
