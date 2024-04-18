@@ -1,181 +1,148 @@
 <%- include('partials/head') %>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-<link rel="stylesheet" type="text/css" href="/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="/style.css">
 
-<div class="imagenAgendaFondo"></div>
+    <div class="imagenAgendaFondo"></div>
 
-<img src="/images/agenda.jpg" alt="Descripción de la imagen" class="imagenAgendaTitulo">
+    <img src="/images/agenda.jpg" alt="Descripción de la imagen" class="imagenAgendaTitulo">
 
-<h2>Crea tu nueva Tarea</h2>
+    <h2>Crea tu nueva Tarea</h2>
 
-<div class="container">
-    <div class="panel">
-        <form class="row g-3 mt-3 " id="crearListaForm" method="POST">
-            <div class="col-12">
-                <label for="nombreCarpeta" class="form-label">Tarea</label>
-                <input type="text" class="form-control" name="nombreCarpeta" id="nombreCarpeta" placeholder="Ingresa la Tarea">
-            </div>
-            <div class="col-6">
-                <label for="fechaTarea" class="form-label">Fecha</label>
-                <input type="date" class="form-control" name="fechaTarea" id="fechaTarea" placeholder="Ingresa la fecha">
-            </div>
-            <div class="col-6">
-                <label for="horaTarea" class="form-label">Hora</label>
-                <input type="time" class="form-control" name="horaTarea" id="horaTarea" placeholder="Ingresa la Hora">
-            </div>
+    <div class="container">
+        <div class="panel">
+            <form class="row g-3 mt-3 " id="crearListaForm" method="POST">
+                <div class="col-12">
+                    <label for="nombreCarpeta" class="form-label">Tarea</label>
+                    <input type="text" class="form-control" name="nombreCarpeta" id="nombreCarpeta"
+                        placeholder="Ingresa la Tarea">
+                </div>
+                <div class="col-6">
+                    <label for="fechaTarea" class="form-label">Fecha</label>
+                    <input type="date" class="form-control" name="fechaTarea" id="fechaTarea"
+                        placeholder="Ingresa la fecha">
+                </div>
+                <div class="col-6">
+                    <label for="horaTarea" class="form-label">Hora</label>
+                    <input type="time" class="form-control" name="horaTarea" id="horaTarea"
+                        placeholder="Ingresa la Hora">
+                </div>
 
-            <div class="col-12">
-                <label for="descripcionTarea" class="form-label">Descripción</label>
-                <textarea id="descripcionTarea" class="form-control" name="descripcionTarea" placeholder="Descripción"></textarea>
-            </div>
+                <div class="col-12">
+                    <label for="descripcionTarea" class="form-label">Descripción</label>
+                    <textarea id="descripcionTarea" class="form-control" name="descripcionTarea"
+                        placeholder="Descripción"></textarea>
+                </div>
 
-            <div class="col-6">
-                <button type="submit" class="btn btn-success">
-                    Registrar
-                </button>
-            </div>
-        </form>
-    </div>
-</div>
-
-
-<!-- <form id="crearListaForm" method="POST">
-    <input id="nombreCarpeta" type="text" name="nombreCarpeta" placeholder="Nombre de la Carpeta">
-    <input id="fechaTarea" type="date" name="fechaTarea">
-    <input id="horaTarea" type="time" name="horaTarea">
-    <textarea id="descripcionTarea" name="descripcionTarea" placeholder="Descripción"></textarea>
-    <button type="submit">Agregar Tarea</button>
-</form> -->
-
-<h2>Lista de Tareas</h2>
-
-<ul>
-    <% contenido.forEach(item=> { %>
-    <li>
-        <div class="panelContainer">
-            <!-- Panel 1 -->
-            <div class="panel">
-                <!-- Formulario 1 -->
-                <form class="editarForm" method="POST">
-                    <div class="formularioContenedor">
-                        <div class="col-6"></div>
-                            <a href="/mostrarArchivo/<%= item %>">
-                                <%= item %>
-                            </a>
-                            <input type="hidden" id="nombreListaAnterior" value="<%= item %>">
-                            <!--<input type="text" id="nuevoNombreLista" placeholder="Nuevo nombre">-->
-                            <!-- Contenedor de botones -->
-                            
-                            <button type="submit" class="btn btn-success">
-                                Ver
-                            </button>
-                            <button type="submit" class="btn btn-success">
-                                Editar
-                            </button> 
-                            <button type="submit" class="btn btn-success" data-nombre="<%= item %>">
-                                Eliminar
-                            </button>
-                        </div>
-                      <!--  <div class="botonesContenedor">
-                            <button type="submit" class="botonEditar">Editar</button>
-                            <button class="eliminarBtn" data-nombre="<%= item %>">Eliminar</button> 
-                        </div> -->
-                    </div>
-                </form>
-            </div>
+                <div class="col-6">
+                    <button type="submit" class="btn btn-success">
+                        Registrar
+                    </button>
+                </div>
+            </form>
         </div>
-
-    </li>
-    <% }); %>
-</ul>
-
-<script>
-    document.getElementById('nombreCarpeta').focus();
-
-    document.getElementById('crearListaForm').addEventListener('submit', function (event) {
-        event.preventDefault(); // Evitar el comportamiento por defecto del formulario
-
-        // Enviar solicitud POST para crear una nueva lista
-        fetch('/crearLista', {
-            method: 'POST',
-            body: JSON.stringify({
-                nombreCarpeta: document.getElementById('nombreCarpeta').value,
-                fechaTarea: document.getElementById('fechaTarea').value,
-                horaTarea: document.getElementById('horaTarea').value,
-                descripcionTarea: document.getElementById('descripcionTarea').value
-            }),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-        .then(response => response.json())
-        .then(data => {
-            // Verificar si hay una propiedad de redirección en la respuesta
-            if (data.redirect) {
-                window.location.href = data.redirect; // Redirigir a la página indicada
-            } else {
-                console.error('Error al crear la lista:', data.error);
-            }
-        })
-        .catch(error => console.error('Error al crear la lista:', error));
-    });
-</script>
+    </div>
 
 
-<script>
-    // Escucha el clic en los botones de eliminar y envía la solicitud DELETE
-    document.querySelectorAll('.eliminarBtn').forEach(btn => {
-        btn.addEventListener('click', function () {
-            const nombreLista = this.dataset.nombre;
-            fetch(`/eliminarLista/${nombreLista}`, {
-                method: 'DELETE'
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.redirect) {
-                    window.location.href = data.redirect;
-                } else {
-                    console.error('Error al eliminar la lista:', data.error);
-                }
-            })
-            .catch(error => console.error('Error al eliminar la lista:', error));
-        });
-    });
-</script>
+
+    <h2>Lista de Tareas</h2>
+
+    <ul>
+        <% contenido.forEach(item=> { %>
+            <li>
+                <div class="panelContainer">
+                    <!-- Panel 1 -->
+                    <div class="panel">
+                        <!-- Formulario 1 -->
+                        <form class="editarForm" method="POST">
+                            <div class="formularioContenedor">
+                                <div class="col-6"></div>
+                                <a href="/mostrarArchivo/<%= item %>">
+                                    <%= item %>
+                                </a>
+                                <input type="hidden" id="nombreListaAnterior" value="<%= item %>">
 
 
-<script>
 
-    document.querySelectorAll('.editarForm').forEach(form => {
-        form.addEventListener('submit', function (event) {
-            event.preventDefault();
 
-            // Encuentra los valores dentro del formulario actual
-            const nombreListaAnterior = this.querySelector('#nombreListaAnterior').value;
-            const nuevoNombreLista = this.querySelector('#nuevoNombreLista').value;
+                            </div>
+                        </form>
 
-            fetch('/editarLista', {
+                        <a href="/verArchivo/<%= item %>" class="btn btn-success" role="button">
+                            Ver
+                        </a>
+
+                        <button type="submit" class="btn btn-success">
+                            Editar
+                        </button>
+
+                        <button type="submit" class="btn btn-success eliminarBtn" data-nombre="<%= item %>">
+                            Eliminar
+                        </button>
+
+                    </div>
+
+                </div>
+                </div>
+
+            </li>
+            <% }); %>
+    </ul>
+
+    <script>
+        document.getElementById('nombreCarpeta').focus();
+
+        document.getElementById('crearListaForm').addEventListener('submit', function (event) {
+            event.preventDefault(); // Evitar el comportamiento por defecto del formulario
+
+            // Enviar solicitud POST para crear una nueva lista
+            fetch('/crearLista', {
                 method: 'POST',
                 body: JSON.stringify({
-                    nombreListaAnterior: nombreListaAnterior,
-                    nuevoNombreLista: nuevoNombreLista
+                    nombreCarpeta: document.getElementById('nombreCarpeta').value,
+                    fechaTarea: document.getElementById('fechaTarea').value,
+                    horaTarea: document.getElementById('horaTarea').value,
+                    descripcionTarea: document.getElementById('descripcionTarea').value
                 }),
                 headers: {
                     'Content-Type': 'application/json'
                 }
             })
-            .then(response => response.json())
-            .then(data => {
-                if (data.redirect) {
-                    window.location.href = data.redirect;
-                } else {
-                    console.error('Error al editar la lista:', data.error);
-                }
-            })
-            .catch(error => console.error('Error al editar la lista:', error));
+                .then(response => response.json())
+                .then(data => {
+                    // Verificar si hay una propiedad de redirección en la respuesta
+                    if (data.redirect) {
+                        window.location.href = data.redirect; // Redirigir a la página indicada
+                    } else {
+                        console.error('Error al crear la lista:', data.error);
+                    }
+                })
+                .catch(error => console.error('Error al crear la lista:', error));
         });
-    });
+    </script>
 
-</script>
 
-<%- include('partials/foot') %>
+    <script>
+        document.querySelectorAll('.eliminarBtn').forEach(btn => {
+            btn.addEventListener('click', function () {
+                const nombreLista = this.dataset.nombre;
+                fetch(`/eliminarLista/${nombreLista}`, {
+                    method: 'DELETE'
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.redirect) {
+                            window.location.href = data.redirect;
+                        } else {
+                            console.error('Error al eliminar la lista:', data.error);
+                        }
+                    })
+                    .catch(error => console.error('Error al eliminar la lista:', error));
+            });
+        });
+
+    </script>
+
+
+    <%- include('partials/foot') %>

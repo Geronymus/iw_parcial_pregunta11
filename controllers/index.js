@@ -106,6 +106,47 @@ exports.eliminarLista = (req, res) => {
     }
 };
 
+
+
+
+
+exports.verLista = (req, res) => {
+    const nombreLista = req.params.nombreLista;
+
+    // Ruta a la carpeta
+    const carpetaPath = path.join(__dirname, '..', 'data', nombreLista);
+
+    try {
+        // Lee el contenido de la carpeta
+        const archivos = fs.readdirSync(carpetaPath);
+        
+        // Verifica si hay archivos en la carpeta
+        if (archivos.length === 0) {
+            return res.status(404).json({ error: 'No se encontraron archivos en la carpeta' });
+        }
+        
+        // Toma el primer archivo encontrado
+        const nombreArchivo = archivos[0];
+        const archivoPath = path.join(carpetaPath, nombreArchivo);
+
+        // Lee el contenido del archivo
+        const contenido = fs.readFileSync(archivoPath, 'utf8');
+
+        // Renderiza la vista con el contenido del archivo
+        res.render('verLista', { contenido });
+    } catch (error) {
+        console.error('Error al leer el archivo:', error);
+        res.status(500).json({ error: 'Ocurrió un error al leer el archivo' });
+    }
+};
+
+
+
+
+
+
+
+
 exports.mostrarContenido = (req, res) => {
     const agendaPath = path.join(__dirname, '..', 'data');
 

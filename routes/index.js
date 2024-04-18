@@ -13,6 +13,6 @@ router.delete('/eliminarLista/:nombreLista', agendaController.eliminarLista); //
 // Ruta para mostrar el contenido de la agenda completa
 router.get('/agenda', agendaController.mostrarContenido);
 
-
+router.get('/verArchivo/:nombreLista', agendaController.verLista);
 
 module.exports = router;
