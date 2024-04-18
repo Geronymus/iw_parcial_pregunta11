@@ -58,19 +58,30 @@
                 <!-- Formulario 1 -->
                 <form class="editarForm" method="POST">
                     <div class="formularioContenedor">
-                        <a href="/mostrarArchivo/<%= item %>">
-                            <%= item %>
-                        </a>
-                        <input type="hidden" id="nombreListaAnterior" value="<%= item %>">
-                        <input type="text" id="nuevoNombreLista" placeholder="Nuevo nombre">
-                        <!-- Contenedor de botones -->
-                        <div class="botonesContenedor">
-                            <button type="submit" class="botonEditar">Editar</button>
-                            <button class="eliminarBtn" data-nombre="<%= item %>">Eliminar</button>
+                        <div class="col-6"></div>
+                            <a href="/mostrarArchivo/<%= item %>">
+                                <%= item %>
+                            </a>
+                            <input type="hidden" id="nombreListaAnterior" value="<%= item %>">
+                            <!--<input type="text" id="nuevoNombreLista" placeholder="Nuevo nombre">-->
+                            <!-- Contenedor de botones -->
+                            
+                            <button type="submit" class="btn btn-success">
+                                Ver
+                            </button>
+                            <button type="submit" class="btn btn-success">
+                                Editar
+                            </button> 
+                            <button type="submit" class="btn btn-success" data-nombre="<%= item %>">
+                                Eliminar
+                            </button>
                         </div>
+                      <!--  <div class="botonesContenedor">
+                            <button type="submit" class="botonEditar">Editar</button>
+                            <button class="eliminarBtn" data-nombre="<%= item %>">Eliminar</button> 
+                        </div> -->
                     </div>
                 </form>
-
             </div>
         </div>
 
