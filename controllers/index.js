@@ -33,7 +33,7 @@ exports.crearLista = (req, res) => {
         const archivoNombre = `${horaTarea}.txt`; // Usamos el nombre de la carpeta como nombre del archivo
         const archivoPath = path.join(carpetaPath, archivoNombre);
 
-        const contenidoArchivo = `# Nombre: ${nombreCarpeta}\n ## Fecha: ${fechaTarea}\n ## Hora: ${horaTarea}\n ## Descripción: ${descripcionTarea}`
+        const contenidoArchivo = `# Nombre: ${nombreCarpeta}\n## Fecha: ${fechaTarea}\n## Hora: ${horaTarea}\n### Descripción: ${descripcionTarea}`
         fs.writeFileSync(archivoPath, contenidoArchivo);
 
         // Redirige después de crear la tarea
@@ -172,22 +172,46 @@ exports.mostrarContenidoEditar = (req, res) => {
 
 
 exports.editarLista = (req, res) => {
+
+
+    const nombreListaActual = req.params.nombreLista;
+
+    console.log("QQ", nombreListaActual)
+
+
     const tarea = {
         nombre: req.body.nombreCarpeta,
         fecha: req.body.fechaTarea,
-        hora: req.body.horaTarea,
+        hora: req.body.horaTarea.replace(':', '_'),
         descripcion: req.body.descripcionTarea
     };
+    const agendaPath = path.join(__dirname, '..', 'data');
+    const carpetaNueva = `${tarea.nombre}_${tarea.fecha}`; // Agregamos la fecha al nombre de la carpeta
+    const carpetaPath = path.join(agendaPath, carpetaNueva);
 
-    // Aquí debes agregar la lógica para editar la tarea utilizando los datos recibidos
-    // Por ejemplo, podrías buscar la tarea en la base de datos y actualizar sus valores
+
+    const eliminar = path.join(agendaPath, nombreListaActual);
 
     try {
-        // Ejemplo de cómo podrías procesar la edición de la tarea
-        // Aquí debes reemplazar este código con tu lógica de edición real
+        // Crear la carpeta si no existe
+        if (!fs.existsSync(carpetaPath)) {
+            fs.mkdirSync(carpetaPath, { recursive: true });
+        }
+
+        // Crear o sobrescribir el archivo de tarea dentro de la carpeta
+        const archivoNombre = `${tarea.hora}.txt`; // Usamos el nombre de la carpeta como nombre del archivo
+        const archivoPath = path.join(carpetaPath, archivoNombre);
+
+        const contenidoArchivo = `# Nombre: ${tarea.nombre}\n## Fecha: ${tarea.fecha}\n## Hora: ${tarea.hora}\n### Descripción: ${tarea.descripcion}`;
+
+
+        fs.rmdirSync(eliminar, { recursive: true }); 
+
+        fs.writeFileSync(archivoPath, contenidoArchivo);
+
         console.log('Editar tarea:', tarea);
 
-        res.status(200).json({ mensaje: 'Tarea editada exitosamente' });
+        res.status(201).json({ mensaje: 'Tarea editada exitosamente', redirect: '/agenda' });
     } catch (error) {
         console.error('Error al editar la tarea:', error);
         res.status(500).json({ error: 'Ocurrió un error al editar la tarea' });

@@ -7,7 +7,7 @@ router.get('/', agendaController.index);
 
 
 router.post('/crearLista', agendaController.crearLista);
-router.post('/editarLista', agendaController.editarLista); // Nueva ruta para editar
+router.post('/editarLista/:nombreLista', agendaController.editarLista); // Nueva ruta para editar
 router.delete('/eliminarLista/:nombreLista', agendaController.eliminarLista); // Nueva ruta para eliminar
 
 // Ruta para mostrar el contenido de la agenda completa

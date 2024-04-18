@@ -40,43 +40,47 @@
 
 
     <script>
-        document.querySelectorAll(".editarFormArchivo").forEach((form) => {
-            form.addEventListener("submit", function (event) {
-                event.preventDefault();
+        document.getElementById('editarFormArchivo').addEventListener('submit', function (event) {
+            event.preventDefault(); // Evitar el comportamiento por defecto del formulario
 
-                // Obtener los datos del formulario
-                const formData = new FormData(form);
-                const tarea = {
-                    nombre: formData.get("nombreCarpeta"),
-                    fecha: formData.get("fechaTarea"),
-                    hora: formData.get("horaTarea"),
-                    descripcion: formData.get("descripcionTarea")
-                };
+            // Obtener la URL actual
+            const currentURL = window.location.href;
 
-                // Enviar los datos al backend
-                fetch('/editarLista', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(tarea)
+            // Encontrar el índice de "/mostrarEditar/"
+            const index = currentURL.indexOf("/mostrarEditar/");
+
+            // Obtener el substring después de "/mostrarEditar/"
+            const segment = currentURL.substring(index + "/mostrarEditar/".length);
+
+            // Usar el segmento como nombreLista
+            const nombreLista = segment;
+
+            fetch(`/editarLista/${nombreLista}`, {
+                method: 'POST',
+                body: JSON.stringify({
+                    nombreCarpeta: document.getElementById('nombreCarpeta').value,
+                    fechaTarea: document.getElementById('fechaTarea').value,
+                    horaTarea: document.getElementById('horaTarea').value,
+                    descripcionTarea: document.getElementById('descripcionTarea').value
+                }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    // Verificar si hay una propiedad de redirección en la respuesta
+                    if (data.redirect) {
+                        window.location.href = data.redirect; // Redirigir a la página indicada
+                    } else {
+                        console.error('Error al crear la lista:', data.error);
+                    }
                 })
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error('Error al editar la tarea');
-                        }
-                        return response.json();
-                    })
-                    .then(data => {
-                        // Manejar la respuesta del servidor, redireccionar o mostrar un mensaje de éxito, etc.
-                        console.log(data);
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                    });
-            });
+                .catch(error => console.error('Error al crear la lista:', error));
         });
+
     </script>
+
 
 
     <%- include('partials/foot') %>
