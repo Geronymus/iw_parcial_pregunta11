@@ -15,4 +15,9 @@ router.get('/agenda', agendaController.mostrarContenido);
 
 router.get('/verArchivo/:nombreLista', agendaController.verLista);
 
+
+router.get('/mostrarEditar/:nombreLista', agendaController.mostrarContenidoEditar);
+
+
+
 module.exports = router;

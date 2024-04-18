@@ -34,7 +34,7 @@ exports.crearLista = (req, res) => {
         const archivoNombre = `${horaTarea}.txt`; // Usamos el nombre de la carpeta como nombre del archivo
         const archivoPath = path.join(carpetaPath, archivoNombre);
 
-        const contenidoArchivo = `# Nombre: ${nombreCarpeta}\n ## Fecha: ${fechaTarea}\n ## Hora: ${horaTarea}\n> Descripción: ${descripcionTarea}`
+        const contenidoArchivo = `# Nombre: ${nombreCarpeta}\n ## Fecha: ${fechaTarea}\n ## Hora: ${horaTarea}\n ## Descripción: ${descripcionTarea}`
         fs.writeFileSync(archivoPath, contenidoArchivo);
 
         // Redirige después de crear la tarea
@@ -80,6 +80,10 @@ exports.editarLista = (req, res) => {
     }
 };
 
+
+
+
+
 exports.eliminarLista = (req, res) => {
     const nombreLista = req.params.nombreLista; // Usando parámetros de ruta
 
@@ -119,12 +123,12 @@ exports.verLista = (req, res) => {
     try {
         // Lee el contenido de la carpeta
         const archivos = fs.readdirSync(carpetaPath);
-        
+
         // Verifica si hay archivos en la carpeta
         if (archivos.length === 0) {
             return res.status(404).json({ error: 'No se encontraron archivos en la carpeta' });
         }
-        
+
         // Toma el primer archivo encontrado
         const nombreArchivo = archivos[0];
         const archivoPath = path.join(carpetaPath, nombreArchivo);
@@ -159,6 +163,35 @@ exports.mostrarContenido = (req, res) => {
     }
 };
 
+
+
+exports.mostrarContenidoEditar = (req, res) => {
+
+
+    const agendaPath = path.join(__dirname, '..', 'data');
+
+    try {
+
+        // Lee el contenido de la carpeta
+        const archivos = fs.readdirSync(carpetaPath);
+
+        if (archivos.length === 0) {
+            return res.status(404).json({ error: 'No se encontraron archivos en la carpeta' });
+        }
+
+        // Toma el primer archivo encontrado
+        const nombreArchivo = archivos[0];
+        const archivoPath = path.join(carpetaPath, nombreArchivo);
+
+        // Lee el contenido del archivo
+        const contenido = fs.readFileSync(archivoPath, 'utf8');
+        // Renderiza la vista con el contenido del archivo
+        res.render('mostrarContenido', { title: 'List Agenda', contenido });
+    } catch (error) {
+        console.error('Error al listar el contenido:', error);
+        res.status(500).json({ error: 'Ocurrió un error al listar el contenido' });
+    }
+};
 
 
 

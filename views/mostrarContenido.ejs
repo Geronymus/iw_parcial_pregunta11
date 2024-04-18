@@ -1,104 +1,49 @@
 <%- include('partials/head') %>
 
-<link rel="stylesheet" type="text/css" href="/styleContenido.css">
+    <link rel="stylesheet" type="text/css" href="/styleContenido.css">
 
-<div class="imagenAgendaFondo"></div>
+    <div class="imagenAgendaFondo"></div>
 
-<h2>Crea tu Actividad</h2>
 
-<form id="crearArchivoForm" method="POST">
-    <!-- Agregamos un campo oculto para el nombre de la lista -->
-    <input type="hidden" id="newLista" name="nombreLista" value="<%= nombreLista  %>" />
-    <input type="text" id="newArchivo" name="nombreArchivo" placeholder="Nombre del archivo" />
-    <!-- Otros campos del formulario si es necesario -->
-    <button type="submit">Crear Archivo</button>
-</form>
+    <h2>Edita la Tarea</h2>
 
-    <h1>Carpeta <%= nombreLista %></h>
-    <!-- Mostramos el nombre de la lista aquí -->
-    <div class="panelConScroll">
-        <ul>
-            <% archivos.forEach(archivo=> { %>
+    <div class="container">
+        <div class="panel">
+            <% contenido.forEach(item=> { %>
 
-                <li id="archivo">
-                        <form class="editarFormArchivo" method="POST">
-                            <%= archivo %>
-                            <br>
-                            <input type="hidden" name="nombreLista" value="<%= nombreLista %>" />
-                            <input type="hidden" class="nombreArchivoAnterior" value="<%= archivo %>" />
-                            <input type="text" class="nuevoNombreArchivo" placeholder="Nuevo nombre" />
-                            <div class="botonesContenedor">
-                                <button type="submit">Editar</button>
-                                <button class="eliminarBtn" data-ruta="<%= nombreLista %>" data-nombre="<%= archivo %>">Eliminar</button>
-                            </div>
-                        </form>
+                <form class="row g-3 mt-3 " id="editarFormArchivo" method="POST">
+                    <div class="col-12">
+                        <label for="nombreCarpeta" class="form-label">Tarea</label>
+                        <input type="text" class="form-control" name="nombreCarpeta" id="nombreCarpeta">
+                    </div>
+                    <div class="col-6">
+                        <label for="fechaTarea" class="form-label">Fecha</label>
+                        <input type="date" class="form-control" name="fechaTarea" id="fechaTarea">
+                    </div>
+                    <div class="col-6">
+                        <label for="horaTarea" class="form-label">Hora</label>
+                        <input type="time" class="form-control" name="horaTarea" id="horaTarea">
+                    </div>
 
-                </li>
-                <% }); %>
-        </ul>
+                    <div class="col-12">
+                        <label for="descripcionTarea" class="form-label">Descripción</label>
+                        <textarea id="descripcionTarea" class="form-control" name="descripcionTarea"></textarea>
+                    </div>
+
+                    <div class="col-6">
+                        <button type="submit" class="btn btn-success">
+                            Editar
+                        </button>
+                    </div>
+                </form>
+
+
+                <% }) %>
+        </div>
     </div>
 
-    <script>
-        document
-            .getElementById("crearArchivoForm")
-            .addEventListener("submit", function (event) {
-                event.preventDefault(); // Evitar el comportamiento por defecto del formulario
 
-                // Enviar solicitud POST para crear un nuevo archivo
-                fetch(
-                    "/crearArchivo/" +
-                    encodeURIComponent(document.getElementById("newLista").value),
-                    {
-                        method: "POST",
-                        body: JSON.stringify({
-                            nombreArchivo: document.getElementById("newArchivo").value,
-                        }), // Solo un objeto JSON
-                        headers: {
-                            "Content-Type": "application/json",
-                        },
-                    }
-                )
-                    .then((response) => response.json())
-                    .then((data) => {
-                        if (data.redirect) {
-                            window.location.href = data.redirect;
-                        } else {
-                            console.error("Error al crear el archivo:", data.error);
-                        }
-                    })
-                    .catch((error) => console.error("Error al crear el archivo:", error));
-            });
-    </script>
 
-    <script>
-        // Escucha el clic en los botones de eliminar y envía la solicitud DELETE
-        document.querySelectorAll(".eliminarBtn").forEach((btn) => {
-            btn.addEventListener("click", function () {
-                const rutaCompleta = this.dataset.ruta;
-                const nombreArchivo = this.dataset.nombre;
-
-                fetch(`/eliminarArchivo/${rutaCompleta}`, {
-                    // Pasar el nombre del archivo como parámetro de consulta
-                    method: "DELETE",
-                    body: JSON.stringify({ nombreArchivo }),
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                })
-                    .then((response) => response.json())
-                    .then((data) => {
-                        if (data.redirect) {
-                            window.location.href = data.redirect;
-                        } else {
-                            console.error("Error al eliminar el archivo:", data.error);
-                        }
-                    })
-                    .catch((error) =>
-                        console.error("Error al eliminar el archivo:", error)
-                    );
-            });
-        });
-    </script>
 
     <script>
 
@@ -107,36 +52,7 @@
             form.addEventListener("submit", function (event) {
                 event.preventDefault();
 
-                // Encuentra los valores dentro del formulario actual
-                const nombreLista = this.querySelector('input[name="nombreLista"]').value;
-                const nombreArchivoAnterior = this.querySelector('.nombreArchivoAnterior').value;
-                const nuevoNombreArchivo = this.querySelector('.nuevoNombreArchivo').value;
-
-                fetch(
-                    "/editarArchivo/" + encodeURIComponent(nombreLista),
-                    {
-                        method: "POST",
-                        body: JSON.stringify({
-                            nombreArchivoAnterior: nombreArchivoAnterior,
-                            nuevoNombreArchivo: nuevoNombreArchivo,
-                        }),
-                        headers: {
-                            "Content-Type": "application/json",
-                        },
-                    }
-                )
-                    .then((response) => response.json())
-                    .then((data) => {
-                        if (data.redirect) {
-                            window.location.href = data.redirect;
-                        } else {
-                            console.error("Error al editar la lista:", data.error);
-                        }
-                    })
-                    .catch((error) => console.error("Error al editar la lista:", error));
-            });
-        });
-
+            })})
     </script>
 
     <%- include('partials/foot') %>
