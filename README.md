@@ -1,5 +1,5 @@
 # Ejecucion de Docker
-
+## No tener en ejecución el puerto 8089
 ```cmd
 docker-compose up -d
 ```
